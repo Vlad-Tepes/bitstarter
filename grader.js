@@ -50,6 +50,7 @@ var checkHtmlFile = function(htmlfile, checksfile, mode) {
         $ = cheerioHtmlFile(htmlfile);
     } else {
 	$ = cheerio.load(htmlfile);
+	//console.log($);
     }
     var checks = loadChecks(checksfile).sort();
     var out = {};
@@ -79,7 +80,9 @@ if(require.main == module) {
 			console.log("Error!");
 		} else {
 			//console.log(result);
-			var chekJson = checkHtmlFile(result, program.checks, "url");
+			var checkJson = checkHtmlFile(result, program.checks, "url");
+			var outJson = JSON.stringify(checkJson, null, 4);
+			console.log(outJson);
 		}
 	})
 	//var checkJson = checkHtmlFile(program.url, program.checks);
@@ -87,10 +90,10 @@ if(require.main == module) {
         if(program.file) {
 	    //console.log("FILE")
 	    var checkJson = checkHtmlFile(program.file, program.checks, "file");
+	    var outJson = JSON.stringify(checkJson, null, 4);
+   	    console.log(outJson);
 	}
     }
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
 } else {
     exports.checkHtmlFile = checkHtmlFile;
 }
