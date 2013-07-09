@@ -67,6 +67,17 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
+var writeout = function(output) {
+	fs.writeFile("output.json",output, function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log("File saved");
+		}
+	});
+}
+
+
 if(require.main == module) {
     program
         .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
@@ -83,6 +94,7 @@ if(require.main == module) {
 			var checkJson = checkHtmlFile(result, program.checks, "url");
 			var outJson = JSON.stringify(checkJson, null, 4);
 			console.log(outJson);
+			writeout(outJson);
 		}
 	})
 	//var checkJson = checkHtmlFile(program.url, program.checks);
@@ -92,6 +104,7 @@ if(require.main == module) {
 	    var checkJson = checkHtmlFile(program.file, program.checks, "file");
 	    var outJson = JSON.stringify(checkJson, null, 4);
    	    console.log(outJson);
+	    writeout(outJson);
 	}
     }
 } else {
